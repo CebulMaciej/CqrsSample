@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using CqrsSample.Application;
 using CqrsSample.Infrastructure;
+using MediatR;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +28,9 @@ namespace CqrsSample.Api
                 .ConfigureServices(services =>
                     {
                         services.AddControllers();
+                        services.AddMvc();
+                        services.AddMediatR(Assembly.GetExecutingAssembly());
+                        
                         services
                             .AddApplication()
                             .AddInfrastructure();
