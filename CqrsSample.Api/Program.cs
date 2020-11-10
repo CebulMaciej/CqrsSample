@@ -13,6 +13,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
+using Serilog.Filters;
 
 namespace CqrsSample.Api
 {
@@ -39,12 +42,23 @@ namespace CqrsSample.Api
                 .Configure(app =>
                     {
                         app.UseRouting();
+
+                        app.UseSerilogRequestLogging();
+                        
                         app
                             .UseApplication()
                             .UseInfrastructure();
                         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
                     }
-                );
+                ).UseSerilog((context, loggerConfiguration) =>
+                {
+                    loggerConfiguration.Enrich.FromLogContext()
+                        .MinimumLevel.Is(LogEventLevel.Information)
+                        .Enrich.WithProperty("Environment", context.HostingEnvironment.EnvironmentName)
+                        .Enrich.WithProperty("ApplicationName", context.HostingEnvironment.ApplicationName);
+
+                    loggerConfiguration.WriteTo.Console();
+                });
 
     }
 }
