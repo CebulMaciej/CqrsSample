@@ -1,0 +1,19 @@
+@address = http://localhost:5050
+
+@api = {{address}}/api
+
+
+###
+GET {{address}}/ping
+
+###
+POST {{api}}/examples
+Content-Type: application/json
+
+{
+    "Content":"sialalaoko"
+}
+###
+@exampleId = e5a2fbaf-945b-4c49-9f56-0c4e5deb7ac3
+###
+GET {{api}}/examples/{{exampleId}}
