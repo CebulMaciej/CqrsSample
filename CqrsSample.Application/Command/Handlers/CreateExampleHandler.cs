@@ -10,10 +10,12 @@ namespace CqrsSample.Application.Command.Handlers
     public class CreateExampleHandler : IRequestHandler<CreateExample,Guid>
     {
         private readonly IExampleRepository _exampleRepository;
+        private readonly IEventProcessor _eventProcessor;
 
-        public CreateExampleHandler(IExampleRepository exampleRepository)
+        public CreateExampleHandler(IExampleRepository exampleRepository,IEventProcessor eventProcessor)
         {
             _exampleRepository = exampleRepository;
+            _eventProcessor = eventProcessor;
         }
 
         public async Task<Guid> Handle(CreateExample request, CancellationToken cancellationToken)
@@ -22,9 +24,9 @@ namespace CqrsSample.Application.Command.Handlers
             Example example = Example.Create(id, request.Content);
 
             await _exampleRepository.Add(example);
-            
-            //TODO same way to propagate event
 
+            await _eventProcessor.Process(example.Events);
+            
             return id;
         }
     }

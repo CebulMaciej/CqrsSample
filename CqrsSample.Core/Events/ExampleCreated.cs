@@ -1,4 +1,5 @@
 using CqrsSample.Core.Entities;
+using MediatR;
 
 namespace CqrsSample.Core.Events
 {

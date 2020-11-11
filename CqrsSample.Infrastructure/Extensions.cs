@@ -12,6 +12,7 @@ namespace CqrsSample.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddMediatR(Assembly.GetExecutingAssembly());
+            serviceCollection.AddTransient<IEventProcessor,EventProcessor>();
             serviceCollection.AddSingleton<IExampleRepository, ExampleRepository>();
             return serviceCollection;
         }
