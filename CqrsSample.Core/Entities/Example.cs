@@ -7,7 +7,7 @@ namespace CqrsSample.Core.Entities
     {
         public string Content { get; }
 
-        private Example(Guid id, string content)
+        public Example(Guid id, string content)
         {
             Id = id;
             Content = content;

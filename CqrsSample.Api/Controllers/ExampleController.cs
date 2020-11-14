@@ -23,16 +23,16 @@ namespace CqrsSample.Api.Controllers
         [HttpGet("{id:Guid}")]
         public async Task<ActionResult> GetById(Guid id)
         {
-            ExampleDto p = await _mediator.Send(new GetExample
+            ExampleDto example = await _mediator.Send(new GetExample
             {
                 Id = id
             });
-            if (p is null)
+            if (example is null)
             {
                 return NotFound();
             }
 
-            return Ok(p);
+            return Ok(example);
         }
 
         [HttpPost]
@@ -40,9 +40,9 @@ namespace CqrsSample.Api.Controllers
         {
             CreateExample createExample = new CreateExample(requestModel.Content);
 
-            Guid p = await _mediator.Send(createExample);
+            Guid exampleId = await _mediator.Send(createExample);
 
-            return Created($"/examples/{p}", null);
+            return Created($"/examples/{exampleId}", null);
         }
     }
 }

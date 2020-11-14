@@ -1,10 +1,14 @@
 using System.Reflection;
 using CqrsSample.Application.Services;
+using CqrsSample.Infrastructure.Mongo.Abstract;
+using CqrsSample.Infrastructure.Mongo.Concrete;
+using CqrsSample.Infrastructure.Options;
 using CqrsSample.Infrastructure.Services;
 using MediatR;
-using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+
 namespace CqrsSample.Infrastructure
 {
     public static class Extensions
@@ -13,7 +17,21 @@ namespace CqrsSample.Infrastructure
         {
             serviceCollection.AddMediatR(Assembly.GetExecutingAssembly());
             serviceCollection.AddTransient<IEventProcessor,EventProcessor>();
-            serviceCollection.AddSingleton<IExampleRepository, ExampleRepository>();
+
+            serviceCollection.AddTransient<IMongoClientProvider, MongoClientProvider>();
+            serviceCollection.AddTransient<IMongoDatabaseProvider, MongoDatabaseProvider>();
+            serviceCollection.AddTransient<IMongoCollectionProvider,MongoCollectionProvider>();
+            
+            serviceCollection.AddSingleton<IExampleRepository, MongoExampleRepository>();
+
+            ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+
+            IConfiguration configuration = serviceProvider.GetService<IConfiguration>();
+
+            MongoOptions mongoOptions = configuration.GetSection("Mongo").Get<MongoOptions>();
+
+            serviceCollection.AddSingleton(mongoOptions);
+            
             return serviceCollection;
         }
 

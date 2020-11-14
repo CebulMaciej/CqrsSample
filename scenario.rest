@@ -11,9 +11,9 @@ POST {{api}}/examples
 Content-Type: application/json
 
 {
-    "Content":"sialalaoko"
+    "Content":"exampleContentValue"
 }
 ###
-@exampleId = e5a2fbaf-945b-4c49-9f56-0c4e5deb7ac3
+@exampleId = 03987ad6-2afc-42f7-a385-a489006257da
 ###
 GET {{api}}/examples/{{exampleId}}
