@@ -14,6 +14,6 @@ Content-Type: application/json
     "Content":"exampleContentValue"
 }
 ###
-@exampleId = 03987ad6-2afc-42f7-a385-a489006257da
+@exampleId = ccebc08f-d6fa-4da2-afe5-73ff2bd75c40
 ###
 GET {{api}}/examples/{{exampleId}}

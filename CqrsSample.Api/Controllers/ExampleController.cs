@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CqrsSample.Api.Models;
 using CqrsSample.Application.Command;
@@ -34,6 +35,10 @@ namespace CqrsSample.Api.Controllers
 
             return Ok(example);
         }
+
+        [HttpGet()]
+        public async Task<ActionResult> Get()
+            => Ok(await _mediator.Send(new GetExamples()));
 
         [HttpPost]
         public async Task<ActionResult> Post(AddExampleRequestModel requestModel)
