@@ -33,6 +33,7 @@ namespace CqrsSample.Infrastructure.Mongo.Queries.Handlers
 
             return new ExampleDto
             {
+                Id = result.Id,
                 Content = result.Content
             };
         }

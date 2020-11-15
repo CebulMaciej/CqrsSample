@@ -30,6 +30,7 @@ namespace CqrsSample.Infrastructure.Mongo.Queries.Handlers
 
             return result.Select((x) => 
             new ExampleDto{
+                Id = x.Id,
                 Content = x.Content
             });
         }
